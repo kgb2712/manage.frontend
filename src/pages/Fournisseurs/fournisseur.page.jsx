@@ -8,7 +8,15 @@ const  Fournisseur = ()=> {
   const navigate = useNavigate();
         const getFournisseur = async (params)=>{
     try {
-       const {data} = await axios.get(`http://127.0.0.1:4000/listeDesFournisseurs`)
+       //const {data} = await axios.get(`http://127.0.0.1:4000/listeDesFournisseurs`)
+       const token = localStorage.getItem('token'); // Récupérer le token JWT
+
+       const { data } = await axios.get('http://localhost:4000/listeDesFournisseurs', {
+         headers: {
+           Authorization:`Bearer ${token}`, // Ajouter le token aux en-têtes
+         },
+       });
+ 
        setFournisseur(data)
 
       } catch (error){

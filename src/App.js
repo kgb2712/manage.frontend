@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Article, Categorie, Commande,  CreateCategorie, CreateCommande, CreateFournisseurs, CreateProduits, FormulaireProduits, Home, Login, MainLayout, Produits } from "./pages"
-import Fournisseur from "./pages/Fournisseurs/fournisseur.page";
+import {  Categorie, Clien, Commande, CreateCategories,CreateClins,CreateCommande, CreateFournisseurs, CreatePersonnels, CreateProduits, EditerCategorie, EditerClin, EditerCommande, EditerPersonnel, EditerProduit, Enregistrements, FormulaireProduits, Fournisseurs, Home, Login, MainLayout, Persons, Produits } from "./pages"
+
+
 
 export const url = 'http://127.0.0.1:4000 ';
 
@@ -10,6 +11,10 @@ const routers = useMemo(()=>createBrowserRouter([
   {
     path:'/',
     element:<Login/>
+  },
+  {
+    path:'/formulaire',
+    element:<Enregistrements/>
   },
 
   
@@ -28,10 +33,6 @@ const routers = useMemo(()=>createBrowserRouter([
         path:"categories",
         element:<Categorie/>
       },
-      {
-        path:"createCategorie",
-        element:<CreateCategorie/>
-      },
 
       {
         path:"createProduits",
@@ -42,8 +43,8 @@ const routers = useMemo(()=>createBrowserRouter([
         element:<FormulaireProduits/>
       },
       {
-        path:"article",
-        element:<Article/>
+        path:"personn",
+        element:<Persons/>
       },
       {
         path:"creerProduits",
@@ -59,22 +60,54 @@ const routers = useMemo(()=>createBrowserRouter([
       },
       {
         path:"fournisseur",
-        element:<Fournisseur/>
+        element:<Fournisseurs/>
       },
       {
         path:"creerFournisseur",
         element:<CreateFournisseurs/>
       },
+      {
+        path:"editerProduits/:id",
+        element:<EditerProduit/>
+      },
+      {
+        path:"editerCategorie/:id",
+        element:<EditerCategorie/>
+      },
+      {
+        path:"createKategorie",
+        element:<CreateCategories/>
+      },
+      {
+        path:"createPersonnelles",
+        element:<CreatePersonnels/>
+      },
+      {
+        path:"editePersonnel/:id",
+        element:<EditerPersonnel/>
+      },
+      {
+        path:"editecommande/:id",
+        element:<EditerCommande/>
+      },
+      {
+        path:"clientt",
+        element:<Clien/>
+      },
+      
+      {
+        path:"ajouterClient",
+        element:<CreateClins/>
+      },
+      {
+        path:"editionClien",
+        element:<EditerClin/>
+      },
       
     ]
   },
   
-  
-  
-
 ]),[]);
-
- 
 
 
   return (

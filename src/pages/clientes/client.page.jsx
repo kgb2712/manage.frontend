@@ -1,15 +1,16 @@
 import axios from 'axios';
 import React,{useState,useEffect} from 'react';
-import {Navigate, useNavigate} from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 
 
-const  Produits = ()=> {
-  const [produits,setProduits]=useState([]);
+const  Clien = ()=> {
+  const [cliente,setCliente]=useState([]);
  const navigate = useNavigate();
+ 
         const getTasks = async (params)=>{
     try {
-       const {data} = await axios.get(`http://127.0.0.1:4000/listeDesProduits`)
-       setProduits(data)
+       const {data} = await axios.get(`http://127.0.0.1:4000/listeDesClients`)
+       setCliente(data)
 
       } catch (error){
 
@@ -18,13 +19,13 @@ const  Produits = ()=> {
       useEffect(()=>{
         getTasks ();
        },[]);
-       console.log(produits)
+       console.log(cliente)
 
-       const supprimerProduits = async (id) => {
-        const confirmation = window.confirm('Êtes-vous sûr de vouloir supprimer cet produit ?');
+       const supprimerClientes = async (id) => {
+        const confirmation = window.confirm('Êtes-vous sûr de vouloir supprimer cet client ?');
     if (!confirmation) return;
         try {
-               await axios.delete(`http://127.0.0.1:4000/SuppressionProduits/${id}`)
+               await axios.delete(`http://127.0.0.1:4000/SuppressionClient/${id}`)
               getTasks();
         
       
@@ -32,8 +33,8 @@ const  Produits = ()=> {
         
         }
       }
-    const editerProduits = async (id)=>{
-      navigate (`/dashboard/editerProduits/${id}`)
+    const editerCliente = async (id)=>{
+      navigate (`/dashboard/editionClien/${id}`)
     }
 
       
@@ -42,11 +43,11 @@ const  Produits = ()=> {
     <div>
        <div class="container-xxl flex-grow-1 container-p-y">
        <h4 className="fw-bold py-3 mb-4">
-  <span className="text-muted fw-light">Tableau de bord /</span> Produits
+  <span className="text-muted fw-light">Tableau de bord /</span> Clients
 </h4>
                   <center>
             <div style={{marginBottom:'10px'}} >
-                        <a button type="button" href='/dashboard/creerProduits' class="btn btn-success">Ajouter un Produit</a>
+                        <a button type="button" href='/dashboard/ajouterClient' class="btn btn-success">Ajouter un Client</a>
                         </div>
                         </center>
 
@@ -57,33 +58,29 @@ const  Produits = ()=> {
         <tr>
           <th>_id</th>
           <th>NOM</th>
-          <th>PRIX</th>
-          <th>QUANTITE</th>
-          <th>DESCRIPTION</th>
-          <th>PHOTO</th>
+          <th>PRENOM</th>
+          <th>TELEPHONE</th>
           <th>action</th>
         </tr>
       </thead>
       <tbody className="table-border-bottom-0">
-      {produits.length > 0 ? (
-        produits.map((produits, index) => (
+      {cliente.length > 0 ? (
+        cliente.map((cliente, index) => (
         <tr>
-        <td>  { produits._id }    </td>
-        <td>  {  produits.nom  }    </td>
-        <td>  { produits.prix   }    </td>
-        <td>  {produits.quantite}    </td>
-        <td>  {produits.description} </td>
-        <td>  { produits.photo }    </td>
+        <td>  { cliente._id }    </td>
+        <td>  {cliente.nom  }    </td>
+        <td>  {cliente.prenom}   </td>
+        <td>  {cliente.telephone} </td>
          
       
         <td>
             <div className="dropdown">
               
               <div >
-                <a className="dropdown-item" onClick={()=>editerProduits(produits._id)} >
+                <a className="dropdown-item" onClick={()=>editerCliente(cliente._id )} >
                   <i className="bx bx-edit-alt me-1"/> Edit
                 </a>
-                <a className="dropdown-item" onClick={()=>supprimerProduits(produits._id)} >
+                <a className="dropdown-item" onClick={()=>supprimerClientes(cliente._id)} >
                   <i className="bx bx-trash me-1"/> Supprimer
                 </a>
               </div>
@@ -104,5 +101,5 @@ const  Produits = ()=> {
   );
 }
 
-export default Produits;
+export default Clien;
 

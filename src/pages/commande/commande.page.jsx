@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, {useEffect,useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const  Commande = ()=> {
   const [commande,setCommande] = useState([]);
+  const navigate = useNavigate() ;
 
   const getTasks = async (params) => {
     try {
@@ -20,6 +22,8 @@ const  Commande = ()=> {
 console.log(commande)
 
 const supprimerCommande = async (id) => {
+  const confirmation = window.confirm('Êtes-vous sûr de vouloir supprimer la commande ?');
+  if (!confirmation) return;
   try {
          await axios.delete(`http://127.0.0.1:4000/SuppressionCommande/${id}`)
         getTasks();
@@ -29,18 +33,9 @@ const supprimerCommande = async (id) => {
   
   }
 }
-
-const modifierCommande = async (id) => {
-  try {
-         await axios.put(`http://127.0.0.1:4000/MiseAJourCommande/${id}`)
-        getTasks();
-  
-
-  } catch (error) {
-  
-  }
+const modifierCommande = async (id)=>{
+  navigate (`/dashboard/editecommande/${id}`)
 }
-
 
 
  return (

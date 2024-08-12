@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Categorie() {
 
   const [categorie,setCategorie] = useState([]);
+  const navigate = useNavigate();
 
   const getTasks = async (params) => {
     try {
@@ -32,6 +34,10 @@ const supprimerCategorie = async (id) => {
   
   }
 }
+const editerCategorie = async (id)=>{
+  navigate (`/dashboard/editerCategorie/${id} `)
+}
+
 
 
   return (
@@ -42,7 +48,7 @@ const supprimerCategorie = async (id) => {
 </h4>
                   <center>
             <div style={{marginBottom:'10px'}} >
-                        <a button type="button" href='/dashboard/createCategorie' class="btn btn-success">Ajouter une Categorie</a>
+                        <a button type="button" href='/dashboard/createKategorie' class="btn btn-success">Ajouter une Categorie</a>
                         </div>
                         </center>
       <div className="card">
@@ -67,7 +73,7 @@ const supprimerCategorie = async (id) => {
             <div>
              
               <div>
-                <a className="dropdown-item" href="javascript:void(0);">
+                <a className="dropdown-item" onClick={()=>editerCategorie(categorie._id)}>
                   <i className="bx bx-edit-alt me-1" /> Editer
                 </a>
                 <a className="dropdown-item" onClick={()=>supprimerCategorie(categorie._id)}>

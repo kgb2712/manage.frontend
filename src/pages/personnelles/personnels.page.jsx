@@ -1,14 +1,15 @@
 import axios from 'axios';
 import React,{useState,useEffect} from 'react';
+import {Navigate, useNavigate} from 'react-router-dom'
 
 
-const  Article = ()=> {
-  const [personnels,setPersonnels]=useState([]);
-
+const  Persons = ()=> {
+  const [personnel,setPersonnel]=useState([]);
+ const navigate = useNavigate();
         const getTasks = async (params)=>{
     try {
        const {data} = await axios.get(`http://127.0.0.1:4000/listeDesPersonnes`)
-       setPersonnels(data)
+       setPersonnel(data)
 
       } catch (error){
 
@@ -17,9 +18,11 @@ const  Article = ()=> {
       useEffect(()=>{
         getTasks ();
        },[]);
-       console.log(personnels)
+       console.log(personnel)
 
        const supprimerPersonnels = async (id) => {
+        const confirmation = window.confirm('Êtes-vous sûr de vouloir supprimer cette personne ?');
+    if (!confirmation) return;
         try {
                await axios.delete(`http://127.0.0.1:4000/SuppressionPersonnel/${id}`)
               getTasks();
@@ -29,6 +32,10 @@ const  Article = ()=> {
         
         }
       }
+    const editerPersonne = async (id)=>{
+      navigate (`/dashboard/editePersonnel/${id}`)
+    }
+
       
 
   return (
@@ -39,7 +46,7 @@ const  Article = ()=> {
 </h4>
                   <center>
             <div style={{marginBottom:'10px'}} >
-                        <a button type="button" href='/dashboard/creerarticle' class="btn btn-success">Ajouter un Personnel</a>
+                        <a button type="button" href='/dashboard/createPersonnelles' class="btn btn-success">Ajouter un Personnel</a>
                         </div>
                         </center>
 
@@ -49,31 +56,33 @@ const  Article = ()=> {
       <thead>
         <tr>
           <th>_id</th>
-          <th>nom</th>
-          <th>prenom</th>
-          <th>telephone</th>
-          <th>photo</th>
-          <th>role</th>
-          <th>age</th>
+          <th>NOM</th>
+          <th>PRENOM</th>
+          <th>TELEPHONE</th>
+          <th>PHOTO</th>
+          <th>ROLE</th>
+          <th>AGE</th>
           <th>action</th>
         </tr>
       </thead>
       <tbody className="table-border-bottom-0">
-      {personnels.length > 0 ? (
-        personnels.map((personnels, index) => (
+      {personnel.length > 0 ? (
+        personnel.map((personnels, index) => (
         <tr>
         <td>  { personnels._id }    </td>
-        <td>  {  personnels.nom  }    </td>
-        <td>  { personnels.prenom   }    </td>
-        <td>  {personnels.telephone }    </td>
-        <td>  { personnels.photo   }    </td>
-         <td>  {  personnels.role  }    </td>
-        <td>  { personnels.age }    </td>
+        <td>  {personnels.nom  }    </td>
+        <td>  {personnels.prenom}   </td>
+        <td>  {personnels.telephone} </td>
+        <td>  {personnels.photo} </td>
+        <td>  {personnels.role }</td>
+        <td>  {personnels.age} </td>
+         
+      
         <td>
             <div className="dropdown">
               
               <div >
-                <a className="dropdown-item" >
+                <a className="dropdown-item" onClick={()=>editerPersonne(personnels._id )} >
                   <i className="bx bx-edit-alt me-1"/> Edit
                 </a>
                 <a className="dropdown-item" onClick={()=>supprimerPersonnels(personnels._id)} >
@@ -86,7 +95,7 @@ const  Article = ()=> {
       ))
           ) : (
             <p>Aucune donnée à afficher</p>
-          )}
+      )}
      </tbody>
     </table>
   </div>
@@ -97,4 +106,5 @@ const  Article = ()=> {
   );
 }
 
-export default Article;
+export default Persons;
+
